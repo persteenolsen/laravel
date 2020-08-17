@@ -1,0 +1,11 @@
+# Force HTTP to HTTPS
+RewriteEngine On 
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Avoiding status code 403 forbidden - probably caused by having Laravel in sub-domains
+<IfModule mod_rewrite.c>
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !^/public
+RewriteRule ^(.*)$ /public/$1 [L]
+</IfModule>
